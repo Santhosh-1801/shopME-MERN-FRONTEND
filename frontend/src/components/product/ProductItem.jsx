@@ -8,7 +8,7 @@ const ProductItem = ({product,columnSize}) => {
     <div className="card p-3 rounded">
       <img
         className="card-img-top mx-auto"
-        src={product?.images[0]?product?.images[0].url:"images/product_default.png"}
+        src={product?.images[0]?product?.images[0].url:"/images/default_product.png"}
         alt={product?.name}
       />
       <div

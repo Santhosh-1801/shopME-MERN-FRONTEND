@@ -4,9 +4,11 @@ import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import Loader from '../layout/Loader'
 import StarRatings from 'react-star-ratings'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setCartItem } from '../../redux/features/cartSlice'
 import MetaData from '../layout/MetaData'
+import NewReview from '../reviews/NewReview'
+import ListReview from '../reviews/ListReview'
 
 const ProductDetails = () => {
 
@@ -15,8 +17,11 @@ const ProductDetails = () => {
 
   const {data,isLoading,error,isError}=useGetProductDetailsQuery(params?.id);
   const product=data?.product;
+  const {isAuthenticated}=useSelector((state)=>state.auth)
   const [activeImg,setActiveImg]=useState("")
   const [quantity,setQuantity]=useState(1)
+
+  console.log(product)
 
   const decreaseQty=()=>{
     const count=document.querySelector(".count");
@@ -50,7 +55,7 @@ const ProductDetails = () => {
   }
 
   useEffect(()=>{
-    setActiveImg(product?.images[0]?product?.images[0].url:"images/product_default.png")
+    setActiveImg(product?.images[0]?product?.images[0].url:"/images/default_product.png")
   },[product])
 
   useEffect(()=>{
@@ -131,7 +136,7 @@ const ProductDetails = () => {
           type="button"
           id="cart_btn"
           className="btn btn-primary d-inline ms-4"
-          disabled={product.stock<=0}
+          disabled={!isAuthenticated || product.stock <= 0}
           onClick={setItemToCart}
         >
           Add to Cart
@@ -154,11 +159,14 @@ const ProductDetails = () => {
         <hr />
         <p id="product_seller mb-3">Sold by: <strong>{product?.seller}</strong></p>
 
-        <div className="alert alert-danger my-5" type="alert">
+        {isAuthenticated?<NewReview productId={product?._id}/>:(
+          <div className="alert alert-danger my-5" type="alert">
           Login to post your review.
         </div>
+        )}
       </div>
     </div>
+    {product?.reviews?.length>0 &&<ListReview reviews={product?.reviews}/>}
     </>
   )
 }

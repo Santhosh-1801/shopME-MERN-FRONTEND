@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getPriceQueryParams } from '../../helper/helper'
-import { PROUDCT_CATEGORIES } from '../../constants/constants'
+import { PRODUCT_CATEGORIES} from '../../constants/constants'
 import StarRatings from 'react-star-ratings'
 
 const Filters = () => {
@@ -106,7 +106,7 @@ const Filters = () => {
       <hr />
       <h5 className="mb-3">Category</h5>
         {
-            PROUDCT_CATEGORIES?.map((category)=>(
+            PRODUCT_CATEGORIES?.map((category)=>(
                 <div className="form-check">
                     <input
                     className="form-check-input"

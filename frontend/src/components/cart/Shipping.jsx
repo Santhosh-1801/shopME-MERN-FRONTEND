@@ -21,17 +21,24 @@ const Shipping = () => {
 
 
     const {shippingInfo}=useSelector((state)=>state.cart)
+    const {user}=useSelector((state)=>state.auth)
 
 
-    useEffect(()=>{
-      if(shippingInfo){
-        setAddress(shippingInfo?.address);
-        setCity(shippingInfo?.city);
-        setZipCode(shippingInfo?.zipCode);
-        setPhoneNo(shippingInfo?.phoneNo);
-        setCountry(shippingInfo?.country);
+    useEffect(() => {
+      if (user && shippingInfo?.user === user._id) {
+          setAddress(shippingInfo?.address || "");
+          setCity(shippingInfo?.city || "");
+          setZipCode(shippingInfo?.zipCode || "");
+          setPhoneNo(shippingInfo?.phoneNo || "");
+          setCountry(shippingInfo?.country || "");
+      } else {
+          setAddress("");
+          setCity("");
+          setZipCode("");
+          setPhoneNo("");
+          setCountry("");
       }
-    },[shippingInfo])
+  }, [shippingInfo, user]);
 
 
     const submitHandler=(e)=>{

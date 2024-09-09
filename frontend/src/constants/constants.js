@@ -1,4 +1,4 @@
-export const PROUDCT_CATEGORIES=[
+export const PRODUCT_CATEGORIES=[
                 'Electronics',
                 'Cameras',
                 'Laptops',
